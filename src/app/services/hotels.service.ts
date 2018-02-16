@@ -62,10 +62,14 @@ export class HotelsService {
   }
 
   calcInitialPrice(prices) {
-    this.searchData.price.from =
-      this.searchData.price.min = Math.min(...prices);
-    this.searchData.price.to =
-      this.searchData.price.max = Math.max(...prices);
+    const min = Math.min(...prices),
+      max = Math.max(...prices);
+    this.searchData.price = {
+      from: min,
+      min,
+      to: max,
+      max
+    };
   }
 
   calcNights() {
@@ -78,23 +82,40 @@ export class HotelsService {
     if (this.searchData.date.nights > 0) {
       this.filteredHotels = this.hotels.filter((hotel: Hotel) => {
         if (
-          this.searchData.name
-          && hotel.name.toLowerCase().indexOf(this.searchData.name.toLowerCase()) === -1
+          !this.findByName(hotel) ||
+          !this.findByPrice(hotel) ||
+          !this.checkAvailability(hotel.availability)
         ) {
           return false;
+        } else {
+          return true;
         }
-        if (
-          this.searchData.price.from > hotel.price
-          || this.searchData.price.to < hotel.price
-        ) {
-          return false;
-        }
-        return this.checkAvailability(hotel.availability);
       });
       this.sortResults();
       this.getPagesCount();
       this.getDisplayHotels();
     }
+  }
+  findByName(hotel) {
+    if (
+      this.searchData.name
+      && hotel.name.toLowerCase().indexOf(this.searchData.name.toLowerCase()) === -1
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  findByPrice(hotel) {
+    if (
+      this.searchData.price.from > hotel.price
+      || this.searchData.price.to < hotel.price
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+
   }
   getPagesCount() {
     this.pagination.pages = [];

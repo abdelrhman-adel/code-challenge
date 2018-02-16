@@ -1,10 +1,18 @@
 language: node_js
 
 node_js:
-  - 'node'
+  - “7”
+
+branches:
+  only:
+    - master
 
 addons:
+  code_climate:
+    repo_token: f66214b3897dfe3beff2a9cd4825e07fe3e4b3a2510a11022a7b9f09ec5ba3c4
 
+before_script:
+  - npm install -g @angular/cli
 
-install:
-  - npm install
+script:
+  - ng build --prod
