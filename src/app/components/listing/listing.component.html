@@ -1,3 +1,68 @@
-<p>
-  listing works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-3">
+      <div class="row">
+        <input class="search" [(ngModel)]="search" (ngModelChange)="searchChanged()" placeholder="Search...">
+      </div>
+      <div class="row">
+        <div class="slider-contain">
+          <ion-range-slider *ngIf="hotelServ.searchData.price.max > 0" #sliderElement type="double" [min]="hotelServ.searchData.price.min * hotelServ.searchData.date.nights"
+            [max]="hotelServ.searchData.price.max * hotelServ.searchData.date.nights" [from]="hotelServ.searchData.price.min * hotelServ.searchData.date.nights"
+            [to]="hotelServ.searchData.price.max * hotelServ.searchData.date.nights" prefix="price : " postfix=" AED" decorate_both="false"
+            (onChange)="rangeChanged($event)"></ion-range-slider>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-9">
+      <div class="row tool-bar">
+        <div class="col-sm-6">
+          <strong>total nights : </strong>
+          {{hotelServ.searchData.date.from ? hotelServ.searchData.date.nights : '--'}}
+        </div>
+        <div class="col-sm-3">
+          <button (click)="hotelServ.changeSort('name')" [disabled]="hotelServ.sortBy === 'name'">sort by name</button>
+        </div>
+        <div class="col-sm-3">
+          <button (click)="hotelServ.changeSort('price')" [disabled]="hotelServ.sortBy === 'price'">sort by price</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="message" *ngIf="!hotelServ.loaded">
+            loading...
+          </div>
+          <div class="message" *ngIf="!hotelServ.displayHotels.length && hotelServ.hotels.length && hotelServ.loaded">
+            no hotels matchs your search criteria, change filters from sidebar, or click
+            <a [routerLink]="'/search'">here</a>
+            to go back and change time range
+          </div>
+          <div class="message" *ngIf="!hotelServ.hotels.length && hotelServ.loaded">
+            an error occured, please click
+            <a href="#!" (click)="hotelServ.refresh()">here</a>
+            to retry
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="hotel-block col-xs-12 col-sm-6" *ngFor="let hotel of hotelServ.displayHotels">
+          <div class="contain">
+            <p>
+              <strong>name : </strong> {{hotel.name}}
+            </p>
+            <p>
+              <strong>price : </strong> {{hotel.price * hotelServ.searchData.date.nights | number:'2.2'}} AED
+            </p>
+            <p>
+              <strong>city : </strong> {{hotel.city}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <ul class="pagination" *ngIf="hotelServ.pagination.pages.length">
+          <li *ngFor="let page of hotelServ.pagination.pages" [class.selected]="page == hotelServ.pagination.curPage" (click)="hotelServ.changePage(page)">{{page}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

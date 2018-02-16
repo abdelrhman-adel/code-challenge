@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -13,6 +14,10 @@ import { RequestsService } from './services/requests.service';
 import { HotelsService } from './services/hotels.service';
 import { DateService } from './services/date.service';
 
+import { MyDateRangePickerModule } from 'mydaterangepicker';
+import { IonRangeSliderModule } from 'ng2-ion-range-slider';
+
+
 
 @NgModule({
   declarations: [
@@ -23,7 +28,11 @@ import { DateService } from './services/date.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+
+    MyDateRangePickerModule,
+    IonRangeSliderModule
   ],
   providers: [DateService, RequestsService, HotelsService],
   bootstrap: [AppComponent]

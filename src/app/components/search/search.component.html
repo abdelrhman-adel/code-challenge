@@ -1,3 +1,19 @@
-<p>
-  search works!
-</p>
+<div class="main">
+  <form novalidate #form (ngSubmit)="submitted()">
+    <div class="row">
+      <div class="col">
+        <h4>select Date Range :</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions" [(ngModel)]="dateInput" required></my-date-range-picker>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button [disabled]="!dateInput">search</button>
+      </div>
+    </div>
+  </form>
+</div>

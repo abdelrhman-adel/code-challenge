@@ -8,11 +8,13 @@ export class HotelsService {
   private url = 'https://api.myjson.com/bins/tl0bp';
   private hotels: Hotel[] = [];
   public filteredHotels: Hotel[] = [];
+  public displayHotels: Hotel[] = [];
+  public loaded = false;
   searchData = {
     date: {
-      from: '10-10-2020',
-      to: '12-10-2020',
-      nights: 3
+      from: '',
+      to: '',
+      nights: 1
     },
     name: '',
     price: {
@@ -23,17 +25,21 @@ export class HotelsService {
     }
   };
   sortBy = 'name';
-  perPage = 4;
-  curPage = 1;
+  pagination = {
+    perPage: 4,
+    curPage: 1,
+    pages: [],
+  };
 
   constructor(private requests: RequestsService, private date: DateService) {
     this.getHotels();
   }
-  getHotels() {
-
+  getHotels(callBack = () => { }) {
+    this.loaded = false;
     this.requests.get(
       this.url,
       err => {
+        this.loaded = true;
       }, data => {
         if (data.hotels) {
           const prices = [];
@@ -42,10 +48,17 @@ export class HotelsService {
             prices.push(element.price);
           });
           this.calcInitialPrice(prices);
+          this.loaded = true;
+          callBack();
           this.filterResults();
         }
       }
     );
+  }
+  refresh() {
+    this.getHotels(() => {
+      this.filterResults();
+    });
   }
 
   calcInitialPrice(prices) {
@@ -63,7 +76,6 @@ export class HotelsService {
   }
   filterResults() {
     if (this.searchData.date.nights > 0) {
-      this.filteredHotels = [];
       this.filteredHotels = this.hotels.filter((hotel: Hotel) => {
         if (
           this.searchData.name
@@ -79,8 +91,30 @@ export class HotelsService {
         }
         return this.checkAvailability(hotel.availability);
       });
+      this.sortResults();
+      this.getPagesCount();
+      this.getDisplayHotels();
     }
-    console.log(this.filteredHotels);
+  }
+  getPagesCount() {
+    this.pagination.pages = [];
+    const count = Math.ceil(this.filteredHotels.length / this.pagination.perPage);
+    for (let i = 1; i <= count; i++) {
+      this.pagination.pages.push(i);
+    }
+  }
+  getDisplayHotels() {
+    if (this.filteredHotels.length > this.pagination.perPage) {
+      const skip = ((this.pagination.curPage - 1) * this.pagination.perPage);
+      this.displayHotels = this.filteredHotels.slice(skip, skip + this.pagination.perPage);
+    } else {
+      this.displayHotels = [...this.filteredHotels];
+    }
+  }
+
+  changePage(page) {
+    this.pagination.curPage = page;
+    this.getDisplayHotels();
   }
 
   checkAvailability(availability) {
@@ -104,15 +138,39 @@ export class HotelsService {
 
   search(searchStr) {
     if (this.searchData.name !== searchStr) {
+      this.pagination.curPage = 1;
       this.searchData.name = searchStr;
       this.filterResults();
     }
   }
 
   changePrice(from, to) {
-    this.searchData.price.from = from;
-    this.searchData.price.to = to;
-    this.filterResults();
+    if (this.searchData.price.from !== from
+      || this.searchData.price.to !== to) {
+      this.pagination.curPage = 1;
+      this.searchData.price.from = from;
+      this.searchData.price.to = to;
+      this.filterResults();
+    }
   }
+
+  changeSort(by) {
+    this.sortBy = by;
+    this.sortResults();
+    this.pagination.curPage = 1;
+    this.getDisplayHotels();
+  }
+  sortResults() {
+    if (this.sortBy === 'name') {
+      this.filteredHotels.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      this.filteredHotels.sort((a, b) => {
+        return a.price - b.price;
+      });
+    }
+  }
+
 
 }

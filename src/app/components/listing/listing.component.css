@@ -1,0 +1,55 @@
+.container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.search {
+  width: 100%;
+  padding: 0 10px;
+  height: 40px;
+  margin: 50px 0 30px;
+}
+
+.slider-contain {
+  width: 100%;
+  z-index: 1;
+}
+
+.tool-bar {
+  margin-bottom: 20px;
+}
+
+.hotel-block {
+  margin: 20px 0;
+}
+
+.hotel-block .contain {
+  border: 2px #ccc solid;
+  padding: 15px;
+}
+
+.hotel-block .contain p {
+  margin: 10px 0;
+}
+
+.pagination {
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  border: 2px #ccc solid;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  line-height: 26px;
+  float: left;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.pagination li.selected {
+  pointer-events: none;
+  opacity: 0.6;
+}

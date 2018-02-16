@@ -15,11 +15,11 @@ export class DateService {
   toString(timeStamp) {
     const date = new Date(timeStamp * 1000);
     // Hours part from the timestamp
-    const year = date.getUTCFullYear();
+    const year = date.getFullYear();
     // Minutes part from the timestamp
-    const month = 1 + date.getUTCMonth();
+    const month = 1 + date.getMonth();
     // Seconds part from the timestamp
-    const day = 1 + date.getUTCDate();
+    const day = 1 + date.getDate();
     return day + '-' + month + '-' + year;
   }
 
