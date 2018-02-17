@@ -20,10 +20,10 @@
           {{hotelServ.searchData.date.from ? hotelServ.searchData.date.nights : '--'}}
         </div>
         <div class="col-sm-3">
-          <button (click)="hotelServ.changeSort('name')" [disabled]="hotelServ.sortBy === 'name'">sort by name</button>
+          <button (click)="hotelServ.changeSort('name')" [disabled]="hotelServ.sortBy === 'name' || !hotelServ.displayHotels.length">sort by name</button>
         </div>
         <div class="col-sm-3">
-          <button (click)="hotelServ.changeSort('price')" [disabled]="hotelServ.sortBy === 'price'">sort by price</button>
+          <button (click)="hotelServ.changeSort('price')" [disabled]="hotelServ.sortBy === 'price' || !hotelServ.displayHotels.length">sort by price</button>
         </div>
       </div>
       <div class="row">
@@ -38,7 +38,7 @@
           </div>
           <div class="message" *ngIf="!hotelServ.hotels.length && hotelServ.loaded">
             an error occured, please click
-            <a href="#!" (click)="hotelServ.refresh()">here</a>
+            <a (click)="hotelServ.refresh()">here</a>
             to retry
           </div>
         </div>

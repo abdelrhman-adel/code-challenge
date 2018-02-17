@@ -14,6 +14,7 @@ import { RequestsService } from './services/requests.service';
 import { HotelsService } from './services/hotels.service';
 import { DateService } from './services/date.service';
 
+// plugins
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { IonRangeSliderModule } from 'ng2-ion-range-slider';
 
@@ -31,6 +32,7 @@ import { IonRangeSliderModule } from 'ng2-ion-range-slider';
     HttpClientModule,
     FormsModule,
 
+    // imports plugins modules
     MyDateRangePickerModule,
     IonRangeSliderModule
   ],

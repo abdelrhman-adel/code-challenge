@@ -1,3 +1,7 @@
+
+/**
+ * hotel's model
+ */
 export class Hotel {
   availability;
   city;
