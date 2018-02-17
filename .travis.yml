@@ -3,9 +3,6 @@ language: node_js
 node_js:
   - 'node'
 
-addons:
-  code_climate:
-    repo_token: f66214b3897dfe3beff2a9cd4825e07fe3e4b3a2510a11022a7b9f09ec5ba3c4
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -16,5 +13,13 @@ install:
   - npm install
   - npm install codeclimate-test-reporter
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - bundle exec rspec
+
 after_script:
-  - codeclimate-test-reporter < coverage/lcov.info
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
