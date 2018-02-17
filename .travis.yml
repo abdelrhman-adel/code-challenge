@@ -18,6 +18,6 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - ng build --prod
+  - npm test
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

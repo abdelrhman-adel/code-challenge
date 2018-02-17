@@ -6,7 +6,7 @@ import { DateService } from './date.service';
 @Injectable()
 export class HotelsService {
   private url = 'https://api.myjson.com/bins/tl0bp';
-  private hotels: Hotel[] = [];
+  public hotels: Hotel[] = [];
   public filteredHotels: Hotel[] = [];
   public displayHotels: Hotel[] = [];
   public loaded = false;
