@@ -4,7 +4,7 @@ import { DateService } from './date.service';
 
 const date = '12-10-2020',
   anotherDate = '14-10-2020',
-  timestamp = 1602453600,
+  timestamp = 1602460800,
   range = {
     from: '5-10-2020',
     to: '13-10-2020',

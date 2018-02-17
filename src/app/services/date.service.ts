@@ -18,7 +18,7 @@ export class DateService {
   toTimestamp(str) {
     const arrDate = str.split('-'),
       strDate = arrDate[1] + '-' + arrDate[0] + '-' + arrDate[2],
-      timeStamp = Date.parse(strDate);
+      timeStamp = Date.parse(strDate + ' UTC');
     return timeStamp / 1000;
   }
 
