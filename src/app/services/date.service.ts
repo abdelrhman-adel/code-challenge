@@ -31,7 +31,7 @@ export class DateService {
     const date = new Date(timeStamp * 1000);
     const year = date.getUTCFullYear();
     const month = 1 + date.getUTCMonth();
-    const day = 1 + date.getUTCDate();
+    const day = date.getUTCDate();
     return day + '-' + month + '-' + year;
   }
 
