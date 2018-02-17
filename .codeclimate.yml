@@ -8,7 +8,7 @@ engines:
 exclude_paths:
   - "e2e/"
   - "coverage/"
-  - "**.conf.js/"
+  - "karma.conf.js"
 ratings:
    paths:
    - "src/**/**.ts"
