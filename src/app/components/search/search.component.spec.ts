@@ -41,6 +41,7 @@ describe('SearchComponent', () => {
   it('should send date to hotels service on submit', () => {
     component.dateInput = formattedDate;
     spyOn(service, 'setDate');
+    spyOn(router, 'navigate');
 
     component.submitted();
 
@@ -49,6 +50,7 @@ describe('SearchComponent', () => {
 
   it('should redirect user to listing page on submit', () => {
     component.dateInput = formattedDate;
+    spyOn(service, 'setDate');
     spyOn(router, 'navigate');
 
     component.submitted();
